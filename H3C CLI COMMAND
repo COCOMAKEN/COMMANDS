@@ -1,0 +1,93 @@
+
+##H3C CONFIGURATION (NAME ASSIGNMENT)
+
+sys
+sysname DA-SW-1
+quit
+
+##VLAN ASSIGNMENT
+vlan 100
+name DATA
+quit
+vlan 101
+name SERVER
+quit
+vlan 102
+name VOICE
+quit
+vlan 103
+name MGMT
+quit
+
+##VLAN IP ADDRESSING
+int vlan 100
+ip address 172.18.0.1 22
+quit
+int vlan 101
+ip address 172.18.4.1 24
+quit
+int vlan 102
+ip address 172.18.5.1 24
+quit
+int vlan 103
+ip address 172.18.6.1 24
+quit
+
+##VLAN PORT ASSIGNMENT
+interface Ten-GigabitEthernet1/0/53
+port link-type trunk
+quit
+
+interface Ten-GigabitEthernet1/0/54
+port link-type trunk
+quit
+
+##how to remove trunk
+interface Ten-GigabitEthernet1/0/54
+no port link-type 
+quit
+
+interface Ten-GigabitEthernet1/0/53
+no port link-type 
+quit
+
+
+
+###Link Aggregate
+
+
+
+int bridge-aggregation 40
+quit
+int range xge1/0/53 to xge1/0/54
+port link-aggregation group 40
+
+****wait to load 
+
+int bridge-aggregation40
+port link-type trunk
+*** wait to load
+
+###for testing if gumagana ang bridg-aggregation
+link-aggregation mode dynamic 
+dis link-aggregation summary 
+
+
+##Configure DATA and VOICE trunk for each ports
+
+interface range gi1/0/1 to gi1/0/47
+port lin
+port link-ty
+port link-type trunk
+port trunk pvid vlan 100
+port trunk permit vlan 102
+di this
+
+##assign port access as mgmt
+
+int (interface assigned)
+port link-type access
+port access vlan x (mgmt vlan id)
+quit
+
+##relay command (Core Switch)
